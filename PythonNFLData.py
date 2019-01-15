@@ -72,3 +72,73 @@ class Dataset:
 nfl_dataset = Dataset(nfl_data)
 year_column = nfl_dataset.column('year')
 player_column = nfl_dataset.column('player')
+
+
+#Let's add a count_unique() method to our class so that a user can choose a label and then get the total amount of unique results in the column. This is not too tricky since we have already done all the hard lifting in the column() method but it returns all the elements in a column. Keep this in mind when writing the count_unique() method.
+
+# Default display code
+class Dataset:
+    def __init__(self, data):
+        self.header = data[0]
+        self.data = data[1:]
+
+    def column(self, label):
+        if label not in self.header:
+            return None
+
+        index = 0
+        for idx, element in enumerate(self.header):
+            if label == element:
+                index = idx
+
+        column = []
+        for row in self.data:
+            column.append(row[index])
+        return column
+
+    # Add your count unique method here
+    def count_unique(self, label):
+        unique_results = set(self.column(label))
+        count = len(unique_results)
+        return count
+
+nfl_dataset = Dataset(nfl_data)
+total_years = nfl_dataset.count_unique('year')
+
+Add a method to the Dataset class called __str__()
+
+#Convert the first 10 rows of self.data to a string and set it as the return value.
+#Create an instance of the class called nfl_dataset and call print on it.
+
+class Dataset:
+    def __init__(self, data):
+        self.header = data[0]
+        self.data = data[1:]
+
+    # Add the special method here
+    def __str__(self):
+        data_string = self.data[:10]
+        return str(data_string)
+
+    def column(self, label):
+        if label not in self.header:
+            return None
+
+        index = 0
+        for idx, element in enumerate(self.header):
+            if label == element:
+                index = idx
+
+        column = []
+        for row in self.data:
+            column.append(row[index])
+        return column
+
+
+    def count_unique(self, label):
+        unique_results = set(self.column(label))
+        count = len(unique_results)
+        return count
+
+nfl_dataset = Dataset(nfl_data)
+print(nfl_dataset)
