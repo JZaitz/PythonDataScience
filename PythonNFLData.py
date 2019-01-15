@@ -44,3 +44,31 @@ class Dataset:
 
 nfl_dataset = Dataset(nfl_data)
 nfl_header = nfl_dataset.header
+
+#In the previous screen we were able to parse the headers from a csv file. With these headers, a helpful function for analyzing a dataset is to grab all the column data for a given header label. This is helpful since you might want to extract data from a specific column of a dataset and then process it.
+#Looking at nfl_data, you may notice that the header's index lines up with the rest of the rows. To grab the column data, all we need to do is search through the headers, find the index of the given label, and then loop through the rest of the data returning the value of the index every iteration.
+# Default display code
+class Dataset:
+    def __init__(self, data):
+        self.header = data[0]
+        self.data = data[1:]
+
+    # Add your method here.
+    def column(self, label):
+        if label not in self.header:
+            return None
+
+        index = 0
+        for idx, element in enumerate(self.header):
+            if label == element:
+                index = idx
+
+        column = []
+        for row in self.data:
+            column.append(row[index])
+        return column
+
+
+nfl_dataset = Dataset(nfl_data)
+year_column = nfl_dataset.column('year')
+player_column = nfl_dataset.column('player')
